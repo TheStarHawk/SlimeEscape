@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://08m0dys6xuai"]
+
+[ext_resource type="Texture2D" uid="uid://68dkhtnx55lb" path="res://Sprites/Sigil.png" id="1_ue642"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_ue642")

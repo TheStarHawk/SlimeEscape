@@ -1,0 +1,85 @@
+[gd_scene load_steps=12 format=3 uid="uid://2pnmhh5b87wa"]
+
+[ext_resource type="Script" path="res://scripts/magic_missile.gd" id="1_68tsr"]
+[ext_resource type="Texture2D" uid="uid://1sa7am10bdc8" path="res://Sprites/MagicMissile.png" id="2_4wcid"]
+[ext_resource type="Texture2D" uid="uid://be78mojausa2u" path="res://Sprites/Warning.png" id="3_b0shp"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mdop3"]
+radius = 7.0
+height = 20.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sov4q"]
+atlas = ExtResource("2_4wcid")
+region = Rect2(25, 0, 25, 19)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uakg6"]
+atlas = ExtResource("2_4wcid")
+region = Rect2(0, 0, 25, 19)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t0dgx"]
+atlas = ExtResource("2_4wcid")
+region = Rect2(50, 0, 25, 19)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_q8cwm"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sov4q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uakg6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sov4q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t0dgx")
+}],
+"loop": true,
+"name": &"default",
+"speed": 6.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ix36m"]
+atlas = ExtResource("3_b0shp")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p1w7r"]
+atlas = ExtResource("3_b0shp")
+region = Rect2(24, 0, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ifcxc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ix36m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p1w7r")
+}],
+"loop": true,
+"name": &"default",
+"speed": 4.0
+}]
+
+[node name="Missile" type="CharacterBody2D"]
+script = ExtResource("1_68tsr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_mdop3")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_q8cwm")
+frame_progress = 0.454736
+
+[node name="Warning" type="AnimatedSprite2D" parent="."]
+position = Vector2(-67, 0)
+sprite_frames = SubResource("SpriteFrames_ifcxc")
+frame_progress = 0.972781
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 3.0
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

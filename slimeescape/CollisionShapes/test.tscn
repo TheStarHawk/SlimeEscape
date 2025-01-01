@@ -1,0 +1,93 @@
+[gd_scene load_steps=13 format=3 uid="uid://ctgq3b4bjcmx8"]
+
+[ext_resource type="Script" path="res://CollisionShapes/test.gd" id="1_qa1qf"]
+[ext_resource type="Script" path="res://slimeTest.gd" id="1_v8cti"]
+[ext_resource type="PackedScene" uid="uid://ktg6js5i4u5u" path="res://CollisionShapes/parallax_background.tscn" id="1_vn3ca"]
+[ext_resource type="Texture2D" uid="uid://dpucyim5ca5n" path="res://Sprites/Slime.png" id="2_qdow4"]
+[ext_resource type="Shape2D" uid="uid://cm4bglpkn781n" path="res://CollisionShapes/Ground.tres" id="3_3bgcp"]
+[ext_resource type="PackedScene" uid="uid://2pnmhh5b87wa" path="res://obstacles/magic_missile.tscn" id="6_rr6ur"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_htr7b"]
+atlas = ExtResource("2_qdow4")
+region = Rect2(0, 20, 20, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u70vs"]
+atlas = ExtResource("2_qdow4")
+region = Rect2(20, 20, 20, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_17dwt"]
+atlas = ExtResource("2_qdow4")
+region = Rect2(0, 0, 20, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3bp6y"]
+atlas = ExtResource("2_qdow4")
+region = Rect2(20, 0, 20, 20)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1nasv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_htr7b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u70vs")
+}],
+"loop": false,
+"name": &"air",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_17dwt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3bp6y")
+}],
+"loop": true,
+"name": &"ground",
+"speed": 2.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_t6asw"]
+size = Vector2(380, 20)
+
+[node name="Test" type="Node2D"]
+script = ExtResource("1_qa1qf")
+
+[node name="Missile" parent="." instance=ExtResource("6_rr6ur")]
+
+[node name="Player" type="CharacterBody2D" parent="."]
+position = Vector2(50, 144)
+script = ExtResource("1_v8cti")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player"]
+sprite_frames = SubResource("SpriteFrames_1nasv")
+animation = &"ground"
+frame_progress = 0.682876
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+position = Vector2(0, 2)
+shape = ExtResource("3_3bgcp")
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="Player"]
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+position = Vector2(110, -54)
+limit_top = 0
+limit_bottom = 180
+
+[node name="ParallaxBackground" parent="." instance=ExtResource("1_vn3ca")]
+
+[node name="Floor" type="StaticBody2D" parent="."]
+position = Vector2(50, 164)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
+position = Vector2(140, 0)
+shape = SubResource("RectangleShape2D_t6asw")
+
+[node name="Ceiling" type="StaticBody2D" parent="."]
+position = Vector2(50, 4)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ceiling"]
+position = Vector2(140, 0)
+shape = SubResource("RectangleShape2D_t6asw")
