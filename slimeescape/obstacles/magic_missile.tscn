@@ -1,12 +1,27 @@
-[gd_scene load_steps=12 format=3 uid="uid://2pnmhh5b87wa"]
+[gd_scene load_steps=18 format=3 uid="uid://2pnmhh5b87wa"]
 
 [ext_resource type="Script" path="res://scripts/magic_missile.gd" id="1_68tsr"]
 [ext_resource type="Texture2D" uid="uid://1sa7am10bdc8" path="res://Sprites/MagicMissile.png" id="2_4wcid"]
+[ext_resource type="Texture2D" uid="uid://v6d1hlov5bsl" path="res://Sprites/boom.png" id="2_k64ge"]
 [ext_resource type="Texture2D" uid="uid://be78mojausa2u" path="res://Sprites/Warning.png" id="3_b0shp"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mdop3"]
-radius = 7.0
-height = 20.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4jnob"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pstb3"]
+atlas = ExtResource("2_k64ge")
+region = Rect2(19, 0, 19, 19)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_naq20"]
+atlas = ExtResource("2_k64ge")
+region = Rect2(38, 0, 19, 19)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gsj1h"]
+atlas = ExtResource("2_k64ge")
+region = Rect2(57, 0, 19, 19)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fu6na"]
+atlas = ExtResource("2_k64ge")
+region = Rect2(76, 0, 19, 19)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_sov4q"]
 atlas = ExtResource("2_4wcid")
@@ -22,6 +37,23 @@ region = Rect2(50, 0, 25, 19)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_q8cwm"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pstb3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_naq20")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gsj1h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fu6na")
+}],
+"loop": false,
+"name": &"boom",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_sov4q")
@@ -62,16 +94,21 @@ animations = [{
 "speed": 4.0
 }]
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1e8c2"]
+radius = 3.0
+height = 17.0
+
 [node name="Missile" type="CharacterBody2D"]
 script = ExtResource("1_68tsr")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-67, 0)
 rotation = 1.5708
-shape = SubResource("CapsuleShape2D_mdop3")
+shape = SubResource("RectangleShape2D_4jnob")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_q8cwm")
-frame_progress = 0.454736
+animation = &"boom"
 
 [node name="Warning" type="AnimatedSprite2D" parent="."]
 position = Vector2(-67, 0)
@@ -80,6 +117,16 @@ frame_progress = 0.972781
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 3.0
+one_shot = true
 autostart = true
 
+[node name="Hurtbox" type="Area2D" parent="."]
+position = Vector2(-2, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2(-1, 0)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_1e8c2")
+
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="body_entered" from="Hurtbox" to="." method="_on_hurtbox_body_entered"]

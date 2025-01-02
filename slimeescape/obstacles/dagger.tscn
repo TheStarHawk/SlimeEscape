@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://bq7qdtwl2o2l5"]
+
+[ext_resource type="Script" path="res://scripts/dagger.gd" id="1_and24"]
+[ext_resource type="Texture2D" uid="uid://3e5s7oqxwerw" path="res://Sprites/Daggerpng.png" id="2_a5xd1"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_nnhv6"]
+radius = 12.0
+
+[node name="Dagger" type="Node2D"]
+scale = Vector2(0.75, 0.75)
+script = ExtResource("1_and24")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(4, -4)
+texture = ExtResource("2_a5xd1")
+
+[node name="Hurtbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource("CircleShape2D_nnhv6")
+
+[connection signal="body_entered" from="Hurtbox" to="." method="_on_area_2d_body_entered"]

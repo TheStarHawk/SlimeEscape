@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://bq7qdtwl2o2l5"]
+
+[ext_resource type="Script" path="res://dagger.gd" id="1_and24"]
+[ext_resource type="Texture2D" uid="uid://3e5s7oqxwerw" path="res://Sprites/Daggerpng.png" id="2_a5xd1"]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_and24")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(4, -4)
+texture = ExtResource("2_a5xd1")

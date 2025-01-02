@@ -1,80 +1,74 @@
-[gd_scene load_steps=13 format=3 uid="uid://ctgq3b4bjcmx8"]
+[gd_scene load_steps=15 format=3 uid="uid://ctgq3b4bjcmx8"]
 
-[ext_resource type="Script" path="res://CollisionShapes/test.gd" id="1_qa1qf"]
-[ext_resource type="Script" path="res://slimeTest.gd" id="1_v8cti"]
+[ext_resource type="Script" path="res://scripts/test.gd" id="1_qa1qf"]
 [ext_resource type="PackedScene" uid="uid://ktg6js5i4u5u" path="res://CollisionShapes/parallax_background.tscn" id="1_vn3ca"]
-[ext_resource type="Texture2D" uid="uid://dpucyim5ca5n" path="res://Sprites/Slime.png" id="2_qdow4"]
-[ext_resource type="Shape2D" uid="uid://cm4bglpkn781n" path="res://CollisionShapes/Ground.tres" id="3_3bgcp"]
-[ext_resource type="PackedScene" uid="uid://2pnmhh5b87wa" path="res://obstacles/magic_missile.tscn" id="6_rr6ur"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_htr7b"]
-atlas = ExtResource("2_qdow4")
-region = Rect2(0, 20, 20, 20)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_u70vs"]
-atlas = ExtResource("2_qdow4")
-region = Rect2(20, 20, 20, 20)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_17dwt"]
-atlas = ExtResource("2_qdow4")
-region = Rect2(0, 0, 20, 20)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_3bp6y"]
-atlas = ExtResource("2_qdow4")
-region = Rect2(20, 0, 20, 20)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_1nasv"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_htr7b")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_u70vs")
-}],
-"loop": false,
-"name": &"air",
-"speed": 1.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_17dwt")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_3bp6y")
-}],
-"loop": true,
-"name": &"ground",
-"speed": 2.0
-}]
+[ext_resource type="PackedScene" uid="uid://08m0dys6xuai" path="res://obstacles/sigil.tscn" id="2_w6dky"]
+[ext_resource type="PackedScene" uid="uid://bq7qdtwl2o2l5" path="res://obstacles/dagger.tscn" id="3_c46j8"]
+[ext_resource type="PackedScene" uid="uid://bprl57qjp72nw" path="res://obstacles/slime_pellet.tscn" id="4_emsoi"]
+[ext_resource type="PackedScene" uid="uid://bn68vfq8ihl14" path="res://player.tscn" id="5_ujkyi"]
+[ext_resource type="PackedScene" uid="uid://dew7q5cubqqde" path="res://obstacles/shield_pickup.tscn" id="8_bnm7k"]
+[ext_resource type="Texture2D" uid="uid://ca1u72wcr805x" path="res://Sprites/Point.png" id="10_p221t"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t6asw"]
 size = Vector2(380, 20)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_0ufb1"]
+atlas = ExtResource("10_p221t")
+region = Rect2(0, 0, 10, 10)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iwgo1"]
+atlas = ExtResource("10_p221t")
+region = Rect2(10, 0, 10, 10)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kr2lj"]
+atlas = ExtResource("10_p221t")
+region = Rect2(20, 0, 10, 10)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s2mqi"]
+atlas = ExtResource("10_p221t")
+region = Rect2(30, 0, 10, 10)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_g0uwn"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0ufb1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iwgo1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kr2lj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s2mqi")
+}],
+"loop": true,
+"name": &"default",
+"speed": 4.0
+}]
+
 [node name="Test" type="Node2D"]
 script = ExtResource("1_qa1qf")
 
-[node name="Missile" parent="." instance=ExtResource("6_rr6ur")]
+[node name="Obstacles" type="Node2D" parent="."]
 
-[node name="Player" type="CharacterBody2D" parent="."]
-position = Vector2(50, 144)
-script = ExtResource("1_v8cti")
+[node name="MissileTimer" type="Timer" parent="Obstacles"]
+wait_time = 5.0
+autostart = true
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player"]
-sprite_frames = SubResource("SpriteFrames_1nasv")
-animation = &"ground"
-frame_progress = 0.682876
+[node name="SigilTimer" type="Timer" parent="Obstacles"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
-position = Vector2(0, 2)
-shape = ExtResource("3_3bgcp")
+[node name="Sigil" parent="Obstacles" instance=ExtResource("2_w6dky")]
+position = Vector2(-251, 91)
 
-[node name="ParallaxBackground" type="ParallaxBackground" parent="Player"]
+[node name="Dagger" parent="Obstacles" instance=ExtResource("3_c46j8")]
+position = Vector2(250, 117)
 
-[node name="Camera2D" type="Camera2D" parent="Player"]
-position = Vector2(110, -54)
-limit_top = 0
-limit_bottom = 180
+[node name="SlimePellet" parent="Obstacles" instance=ExtResource("4_emsoi")]
+position = Vector2(88, 146)
+
+[node name="Player" parent="." instance=ExtResource("5_ujkyi")]
 
 [node name="ParallaxBackground" parent="." instance=ExtResource("1_vn3ca")]
 
@@ -91,3 +85,85 @@ position = Vector2(50, 4)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Ceiling"]
 position = Vector2(140, 0)
 shape = SubResource("RectangleShape2D_t6asw")
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Distance" type="Label" parent="UI"]
+offset_left = 2.0
+offset_right = 29.0
+offset_bottom = 14.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 10
+text = "500m"
+
+[node name="Pellets" type="Label" parent="UI"]
+offset_left = 11.0
+offset_top = 13.0
+offset_right = 38.0
+offset_bottom = 27.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 10
+text = "0"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="UI"]
+position = Vector2(5, 20)
+scale = Vector2(0.75, 0.75)
+sprite_frames = SubResource("SpriteFrames_g0uwn")
+
+[node name="GameOverScreen" type="Node2D" parent="UI"]
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="UI/GameOverScreen"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -5.0
+offset_top = -5.0
+offset_right = 5.0
+offset_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.145098, 0, 0, 0.541176)
+
+[node name="Label" type="Label" parent="UI/GameOverScreen"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 114.0
+offset_top = 30.0
+offset_right = 206.0
+offset_bottom = 53.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+text = "GAME OVER"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Restart" type="Button" parent="UI/GameOverScreen"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 138.0
+offset_top = 60.0
+offset_right = 182.0
+offset_bottom = 82.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 10
+text = "Restart"
+
+[node name="ShieldPickup" parent="." instance=ExtResource("8_bnm7k")]
+position = Vector2(870, 53)
+
+[connection signal="timeout" from="Obstacles/MissileTimer" to="." method="_on_missile_timer_timeout"]
+[connection signal="pressed" from="UI/GameOverScreen/Restart" to="." method="_on_restart_pressed"]

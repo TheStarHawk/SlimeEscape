@@ -1,8 +1,117 @@
-[gd_scene load_steps=2 format=3 uid="uid://08m0dys6xuai"]
+[gd_scene load_steps=15 format=3 uid="uid://08m0dys6xuai"]
 
+[ext_resource type="Script" path="res://obstacles/sigil.gd" id="1_00xba"]
 [ext_resource type="Texture2D" uid="uid://68dkhtnx55lb" path="res://Sprites/Sigil.png" id="1_ue642"]
+[ext_resource type="Texture2D" uid="uid://hv5xvbwoo3e4" path="res://Sprites/SigilPowerDown.png" id="3_t0np6"]
 
-[node name="Node2D" type="Node2D"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_yg8xp"]
+atlas = ExtResource("1_ue642")
+region = Rect2(0, 17, 310, 17)
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_ue642")
+[sub_resource type="AtlasTexture" id="AtlasTexture_dbkch"]
+atlas = ExtResource("1_ue642")
+region = Rect2(0, 0, 310, 17)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ncv18"]
+atlas = ExtResource("1_ue642")
+region = Rect2(0, 34, 310, 17)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e6e84"]
+atlas = ExtResource("1_ue642")
+region = Rect2(0, 51, 310, 17)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dh3yf"]
+atlas = ExtResource("1_ue642")
+region = Rect2(0, 34, 310, 17)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kfo76"]
+atlas = ExtResource("1_ue642")
+region = Rect2(0, 51, 310, 17)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_joudl"]
+atlas = ExtResource("3_t0np6")
+region = Rect2(0, 0, 310, 17)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xgm61"]
+atlas = ExtResource("3_t0np6")
+region = Rect2(0, 17, 310, 17)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fh8es"]
+atlas = ExtResource("3_t0np6")
+region = Rect2(0, 34, 310, 17)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4k7kd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yg8xp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dbkch")
+}],
+"loop": true,
+"name": &"Fire",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ncv18")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e6e84")
+}],
+"loop": true,
+"name": &"Load",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dh3yf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kfo76")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_joudl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xgm61")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fh8es")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fh8es")
+}],
+"loop": false,
+"name": &"powerDown",
+"speed": 4.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ffiev"]
+size = Vector2(300, 8)
+
+[node name="Sigil" type="Node2D"]
+script = ExtResource("1_00xba")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_4k7kd")
+animation = &"Fire"
+
+[node name="Hurtbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource("RectangleShape2D_ffiev")
+
+[node name="ChargeTimer" type="Timer" parent="."]
+wait_time = 2.5
+one_shot = true
+autostart = true
+
+[node name="FireTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[connection signal="body_entered" from="Hurtbox" to="." method="_on_hurtbox_body_entered"]
+[connection signal="timeout" from="ChargeTimer" to="." method="_on_charge_timer_timeout"]
+[connection signal="timeout" from="FireTimer" to="." method="_on_fire_timer_timeout"]

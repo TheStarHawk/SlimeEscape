@@ -1,0 +1,42 @@
+[gd_scene load_steps=7 format=3 uid="uid://dew7q5cubqqde"]
+
+[ext_resource type="Script" path="res://shield_pickup.gd" id="1_8h6gn"]
+[ext_resource type="Texture2D" uid="uid://dbjp1redjwpq5" path="res://Sprites/ShieldPickup.png" id="2_vqib0"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qu1n8"]
+atlas = ExtResource("2_vqib0")
+region = Rect2(0, 0, 16, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m8xqh"]
+atlas = ExtResource("2_vqib0")
+region = Rect2(16, 0, 16, 18)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_l8816"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qu1n8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m8xqh")
+}],
+"loop": true,
+"name": &"default",
+"speed": 2.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_d4wqh"]
+radius = 9.0
+height = 18.0
+
+[node name="ShieldPickup" type="Area2D"]
+script = ExtResource("1_8h6gn")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_l8816")
+frame_progress = 0.854292
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_d4wqh")
+
+[connection signal="body_shape_entered" from="." to="." method="_on_body_shape_entered"]
