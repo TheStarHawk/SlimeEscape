@@ -1,0 +1,96 @@
+[gd_scene load_steps=6 format=3 uid="uid://b57esosrl0isg"]
+
+[ext_resource type="Script" path="res://scripts/blocks/dagger_block_2.gd" id="1_wod6a"]
+[ext_resource type="PackedScene" uid="uid://bq7qdtwl2o2l5" path="res://obstacles/dagger.tscn" id="2_t4jt4"]
+[ext_resource type="PackedScene" uid="uid://bprl57qjp72nw" path="res://obstacles/slime_pellet.tscn" id="3_lgmcc"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_twxki"]
+size = Vector2(20, 180)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gtvgs"]
+radius = 15.0
+height = 70.0
+
+[node name="DaggerBlock2" type="Node2D"]
+script = ExtResource("1_wod6a")
+
+[node name="spawner" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="spawner"]
+position = Vector2(10, 90)
+shape = SubResource("RectangleShape2D_twxki")
+
+[node name="Daggers" type="Node2D" parent="."]
+
+[node name="Dagger" parent="Daggers" instance=ExtResource("2_t4jt4")]
+position = Vector2(40, 114)
+
+[node name="Dagger2" parent="Daggers" instance=ExtResource("2_t4jt4")]
+position = Vector2(40, 130)
+
+[node name="Dagger3" parent="Daggers" instance=ExtResource("2_t4jt4")]
+position = Vector2(40, 146)
+
+[node name="Dagger4" parent="Daggers" instance=ExtResource("2_t4jt4")]
+position = Vector2(145, 24)
+
+[node name="Dagger5" parent="Daggers" instance=ExtResource("2_t4jt4")]
+position = Vector2(145, 40)
+
+[node name="Dagger6" parent="Daggers" instance=ExtResource("2_t4jt4")]
+position = Vector2(145, 56)
+
+[node name="Dagger7" parent="Daggers" instance=ExtResource("2_t4jt4")]
+position = Vector2(250, 114)
+
+[node name="Dagger8" parent="Daggers" instance=ExtResource("2_t4jt4")]
+position = Vector2(250, 130)
+
+[node name="Dagger9" parent="Daggers" instance=ExtResource("2_t4jt4")]
+position = Vector2(250, 146)
+
+[node name="NearMiss" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="NearMiss"]
+position = Vector2(40, 130)
+shape = SubResource("CapsuleShape2D_gtvgs")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="NearMiss"]
+position = Vector2(145, 40)
+shape = SubResource("CapsuleShape2D_gtvgs")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="NearMiss"]
+position = Vector2(250, 130)
+shape = SubResource("CapsuleShape2D_gtvgs")
+
+[node name="Pellets" type="Node2D" parent="."]
+
+[node name="SlimePellet" parent="Pellets" instance=ExtResource("3_lgmcc")]
+position = Vector2(84, 66)
+
+[node name="SlimePellet2" parent="Pellets" instance=ExtResource("3_lgmcc")]
+position = Vector2(92, 80)
+
+[node name="SlimePellet3" parent="Pellets" instance=ExtResource("3_lgmcc")]
+position = Vector2(100, 94)
+
+[node name="SlimePellet4" parent="Pellets" instance=ExtResource("3_lgmcc")]
+position = Vector2(189, 94)
+
+[node name="SlimePellet5" parent="Pellets" instance=ExtResource("3_lgmcc")]
+position = Vector2(197, 80)
+
+[node name="SlimePellet6" parent="Pellets" instance=ExtResource("3_lgmcc")]
+position = Vector2(205, 66)
+
+[node name="SlimePellet14" parent="Pellets" instance=ExtResource("3_lgmcc")]
+position = Vector2(348, 138)
+
+[node name="SlimePellet15" parent="Pellets" instance=ExtResource("3_lgmcc")]
+position = Vector2(334, 138)
+
+[node name="SlimePellet16" parent="Pellets" instance=ExtResource("3_lgmcc")]
+position = Vector2(320, 138)
+
+[connection signal="body_entered" from="spawner" to="." method="_on_spawner_body_entered"]
+[connection signal="body_exited" from="NearMiss" to="." method="_on_near_miss_body_exited"]

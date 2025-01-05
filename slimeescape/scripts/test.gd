@@ -47,6 +47,7 @@ func endGame():
 	$UI/GameOverScreen/Score.position.x = get_viewport_rect().size.x/2 - $UI/GameOverScreen/Score.size.x/2
 	if score > HighScores.HighScore10:
 		$UI/GameOverScreen/GameOver.text = "New High Score!"
+		$NewHighScore.play()
 	else:
 		$UI/GameOverScreen/LineEdit.visible = false
 		$UI/GameOverScreen/Initials.visible = false
@@ -76,14 +77,32 @@ func _on_continue_pressed():
 func setHighScore():
 	if score > HighScores.HighScore10:
 		if score > HighScores.HighScore9:
+			HighScores.HighScore10 = HighScores.HighScore9
+			HighScores.Initials10 = HighScores.Initials9
 			if score > HighScores.HighScore8:
+				HighScores.HighScore9 = HighScores.HighScore8
+				HighScores.Initials9 = HighScores.Initials8
 				if score > HighScores.HighScore7:
+					HighScores.HighScore8 = HighScores.HighScore7
+					HighScores.Initials8 = HighScores.Initials7
 					if score > HighScores.HighScore6:
+						HighScores.HighScore7 = HighScores.HighScore6
+						HighScores.Initials7 = HighScores.Initials6
 						if score > HighScores.HighScore5:
+							HighScores.HighScore6 = HighScores.HighScore5
+							HighScores.Initials6 = HighScores.Initials5
 							if score > HighScores.HighScore4:
+								HighScores.HighScore5 = HighScores.HighScore4
+								HighScores.Initials5 = HighScores.Initials4
 								if score > HighScores.HighScore3:
+									HighScores.HighScore4 = HighScores.HighScore3
+									HighScores.Initials4 = HighScores.Initials3
 									if score > HighScores.HighScore2:
+										HighScores.HighScore3 = HighScores.HighScore2
+										HighScores.Initials3 = HighScores.Initials2
 										if score > HighScores.HighScore1:
+											HighScores.HighScore2 = HighScores.HighScore1
+											HighScores.Initials2 = HighScores.Initials1
 											HighScores.HighScore1 = score
 											HighScores.Initials1 = $UI/GameOverScreen/LineEdit.text
 										else:

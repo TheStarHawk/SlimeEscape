@@ -1,10 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://bq7qdtwl2o2l5"]
+[gd_scene load_steps=6 format=3 uid="uid://bq7qdtwl2o2l5"]
 
 [ext_resource type="Script" path="res://scripts/dagger.gd" id="1_and24"]
 [ext_resource type="Texture2D" uid="uid://3e5s7oqxwerw" path="res://Sprites/Daggerpng.png" id="2_a5xd1"]
+[ext_resource type="AudioStream" uid="uid://b5q7f6n7q8f32" path="res://AudioAssets/Dagger.wav" id="3_f0p4u"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_nnhv6"]
 radius = 11.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2dhtc"]
+radius = 100.0
 
 [node name="Dagger" type="Node2D"]
 scale = Vector2(0.75, 0.75)
@@ -19,5 +23,21 @@ texture = ExtResource("2_a5xd1")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
 shape = SubResource("CircleShape2D_nnhv6")
 
-[connection signal="body_entered" from="Hurtbox" to="." method="_on_area_2d_body_entered"]
+[node name="Dagger" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_f0p4u")
+volume_db = -20.0
+pitch_scale = 1.15
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.3
+
+[node name="SoundTriger" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SoundTriger"]
+shape = SubResource("CircleShape2D_2dhtc")
+
 [connection signal="body_entered" from="Hurtbox" to="." method="_on_hurtbox_body_entered"]
+[connection signal="body_entered" from="Hurtbox" to="." method="_on_area_2d_body_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="body_entered" from="SoundTriger" to="." method="_on_sound_triger_body_entered"]
+[connection signal="body_exited" from="SoundTriger" to="." method="_on_sound_triger_body_exited"]

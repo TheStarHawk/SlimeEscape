@@ -1,9 +1,12 @@
-[gd_scene load_steps=19 format=3 uid="uid://08m0dys6xuai"]
+[gd_scene load_steps=24 format=3 uid="uid://08m0dys6xuai"]
 
 [ext_resource type="Script" path="res://scripts/sigil.gd" id="1_00xba"]
 [ext_resource type="Texture2D" uid="uid://68dkhtnx55lb" path="res://Sprites/Sigil.png" id="1_ue642"]
 [ext_resource type="Texture2D" uid="uid://ge0xbcapl431" path="res://Sprites/SigilWait.png" id="3_mjfkh"]
 [ext_resource type="Texture2D" uid="uid://hv5xvbwoo3e4" path="res://Sprites/SigilPowerDown.png" id="3_t0np6"]
+[ext_resource type="AudioStream" uid="uid://dn6oxfng1hega" path="res://AudioAssets/SigilPowerDown.wav" id="5_4g4hv"]
+[ext_resource type="AudioStream" uid="uid://dnjo1ksbukc3l" path="res://AudioAssets/SigilFire.wav" id="6_grt2n"]
+[ext_resource type="AudioStream" uid="uid://oj0swwwacjbk" path="res://AudioAssets/SigilCharge.wav" id="7_mvrf5"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_yg8xp"]
 atlas = ExtResource("1_ue642")
@@ -21,9 +24,17 @@ region = Rect2(0, 51, 310, 17)
 atlas = ExtResource("1_ue642")
 region = Rect2(0, 34, 310, 17)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_8614a"]
-atlas = ExtResource("3_mjfkh")
+[sub_resource type="AtlasTexture" id="AtlasTexture_w6qi4"]
+atlas = ExtResource("3_t0np6")
+region = Rect2(0, 34, 310, 17)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uitnl"]
+atlas = ExtResource("3_t0np6")
 region = Rect2(0, 17, 310, 17)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0emau"]
+atlas = ExtResource("3_t0np6")
+region = Rect2(0, 0, 310, 17)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ao4rm"]
 atlas = ExtResource("3_mjfkh")
@@ -75,12 +86,18 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_8614a")
+"texture": SubResource("AtlasTexture_w6qi4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uitnl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0emau")
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ao4rm")
 }],
-"loop": true,
+"loop": false,
 "name": &"Wait",
 "speed": 3.0
 }, {
@@ -120,7 +137,8 @@ script = ExtResource("1_00xba")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_4k7kd")
 animation = &"Wait"
-frame_progress = 0.347854
+frame = 3
+frame_progress = 1.0
 
 [node name="Hurtbox" type="Area2D" parent="."]
 
@@ -132,5 +150,23 @@ shape = SubResource("RectangleShape2D_ffiev")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="NearMiss"]
 shape = SubResource("RectangleShape2D_5knyw")
 
+[node name="SigilPowerDown" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_4g4hv")
+volume_db = -10.0
+
+[node name="SigilFire" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_grt2n")
+volume_db = -10.0
+pitch_scale = 0.9
+
+[node name="SigilCharge" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_mvrf5")
+volume_db = -10.0
+
+[node name="FireAudio" type="Timer" parent="."]
+wait_time = 0.75
+
 [connection signal="body_entered" from="Hurtbox" to="." method="_on_hurtbox_body_entered"]
 [connection signal="body_exited" from="NearMiss" to="." method="_on_near_miss_body_exited"]
+[connection signal="finished" from="SigilPowerDown" to="." method="_on_sigil_power_down_finished"]
+[connection signal="timeout" from="FireAudio" to="." method="_on_fire_audio_timeout"]

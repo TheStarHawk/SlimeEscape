@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://bprl57qjp72nw"]
+[gd_scene load_steps=10 format=3 uid="uid://bprl57qjp72nw"]
 
 [ext_resource type="Script" path="res://scripts/slime_pellet.gd" id="1_atnmj"]
 [ext_resource type="Texture2D" uid="uid://ca1u72wcr805x" path="res://Sprites/Point.png" id="2_sxjrj"]
+[ext_resource type="AudioStream" uid="uid://c7df8y0glfi7e" path="res://AudioAssets/Pellet.wav" id="3_v4dot"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0ufb1"]
 atlas = ExtResource("2_sxjrj")
@@ -54,4 +55,9 @@ frame_progress = 0.668921
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_oubuv")
 
+[node name="RetroWaterDrop01" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_v4dot")
+pitch_scale = 1.1
+
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="finished" from="RetroWaterDrop01" to="." method="_on_retro_water_drop_01_finished"]

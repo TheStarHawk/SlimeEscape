@@ -32,8 +32,15 @@ func updateAnim():
 			if not is_on_floor():
 				$AnimatedSprite2D.animation = "air"
 				$AnimatedSprite2D.frame = 1
+				if $Sounds/Fall.playing == false:
+					$Sounds/Fall.play()
 			else:
+				$Sounds/Fall.stop()
 				$AnimatedSprite2D.play("dead")
+				if $AnimatedSprite2D.frame == 1:
+					if$Sounds/POP.playing == false:
+						$Sounds/POP.pitch_scale = 0.4
+						$Sounds/POP.play()
 				if $AnimatedSprite2D.frame == 3:
 					state = State.GAMEOVER
 					
@@ -56,6 +63,10 @@ func _physics_process(delta: float) -> void:
 				if is_on_floor():
 					virtSpeed = 0
 				virtSpeed = clampf(virtSpeed - virtAccel * delta, JUMP_VELOCITY, gravity)
+			
+			if Input.is_action_just_pressed("Action"):
+				$Sounds/Jump.pitch_scale = randi_range(9, 11)/10
+				$Sounds/Jump.play()
 				
 			speed = clampf(speed + accel * delta, minSpeed, maxSpeed)
 			velocity.x = speed * delta
@@ -81,12 +92,15 @@ func hurt():
 	$HurtTimer.start()
 	if $Shield.visible == true:
 		$Shield.visible = false
+		$Sounds/POP.pitch_scale = 0.6
+		$Sounds/POP.play()
 	else:
 		die()
 		
 func shieldGet():
 	if $Shield.visible == false:
 		$Shield.visible = true
+		$Sounds/Shield.play()
 	else:
 		$"..".score += 50
 		

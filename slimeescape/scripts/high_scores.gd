@@ -12,15 +12,15 @@ var HighScore9 : int = 2000
 var HighScore10 : int = 1000
 
 var Initials1 : String = "KPK"
-var Initials2 : String = "Bob"
-var Initials3 : String = "LOL"
-var Initials4 : String = "OwO"
-var Initials5 : String = "Kek"
-var Initials6 : String = "FAT"
-var Initials7 : String = "Git"
-var Initials8 : String = "God"
-var Initials9 : String = "Dam"
-var Initials10 : String = "Wot"
+var Initials2 : String = "DEV"
+var Initials3 : String = "STR"
+var Initials4 : String = "HWK"
+var Initials5 : String = "OWO"
+var Initials6 : String = "HWK"
+var Initials7 : String = "STR"
+var Initials8 : String = "DEV"
+var Initials9 : String = "KPK"
+var Initials10 : String = "UWU"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
