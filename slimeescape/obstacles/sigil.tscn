@@ -1,7 +1,8 @@
-[gd_scene load_steps=15 format=3 uid="uid://08m0dys6xuai"]
+[gd_scene load_steps=19 format=3 uid="uid://08m0dys6xuai"]
 
-[ext_resource type="Script" path="res://obstacles/sigil.gd" id="1_00xba"]
+[ext_resource type="Script" path="res://scripts/sigil.gd" id="1_00xba"]
 [ext_resource type="Texture2D" uid="uid://68dkhtnx55lb" path="res://Sprites/Sigil.png" id="1_ue642"]
+[ext_resource type="Texture2D" uid="uid://ge0xbcapl431" path="res://Sprites/SigilWait.png" id="3_mjfkh"]
 [ext_resource type="Texture2D" uid="uid://hv5xvbwoo3e4" path="res://Sprites/SigilPowerDown.png" id="3_t0np6"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_yg8xp"]
@@ -12,13 +13,21 @@ region = Rect2(0, 17, 310, 17)
 atlas = ExtResource("1_ue642")
 region = Rect2(0, 0, 310, 17)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_e6e84"]
+atlas = ExtResource("1_ue642")
+region = Rect2(0, 51, 310, 17)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_ncv18"]
 atlas = ExtResource("1_ue642")
 region = Rect2(0, 34, 310, 17)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_e6e84"]
-atlas = ExtResource("1_ue642")
-region = Rect2(0, 51, 310, 17)
+[sub_resource type="AtlasTexture" id="AtlasTexture_8614a"]
+atlas = ExtResource("3_mjfkh")
+region = Rect2(0, 17, 310, 17)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ao4rm"]
+atlas = ExtResource("3_mjfkh")
+region = Rect2(0, 0, 310, 17)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dh3yf"]
 atlas = ExtResource("1_ue642")
@@ -55,14 +64,25 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ncv18")
+"texture": SubResource("AtlasTexture_e6e84")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_e6e84")
+"texture": SubResource("AtlasTexture_ncv18")
 }],
 "loop": true,
 "name": &"Load",
 "speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8614a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ao4rm")
+}],
+"loop": true,
+"name": &"Wait",
+"speed": 3.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -91,27 +111,26 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ffiev"]
 size = Vector2(300, 8)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5knyw"]
+size = Vector2(300, 20)
+
 [node name="Sigil" type="Node2D"]
 script = ExtResource("1_00xba")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_4k7kd")
-animation = &"Fire"
+animation = &"Wait"
+frame_progress = 0.347854
 
 [node name="Hurtbox" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
 shape = SubResource("RectangleShape2D_ffiev")
 
-[node name="ChargeTimer" type="Timer" parent="."]
-wait_time = 2.5
-one_shot = true
-autostart = true
+[node name="NearMiss" type="Area2D" parent="."]
 
-[node name="FireTimer" type="Timer" parent="."]
-wait_time = 2.0
-one_shot = true
+[node name="CollisionShape2D" type="CollisionShape2D" parent="NearMiss"]
+shape = SubResource("RectangleShape2D_5knyw")
 
 [connection signal="body_entered" from="Hurtbox" to="." method="_on_hurtbox_body_entered"]
-[connection signal="timeout" from="ChargeTimer" to="." method="_on_charge_timer_timeout"]
-[connection signal="timeout" from="FireTimer" to="." method="_on_fire_timer_timeout"]
+[connection signal="body_exited" from="NearMiss" to="." method="_on_near_miss_body_exited"]

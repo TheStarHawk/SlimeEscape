@@ -1,12 +1,11 @@
-[gd_scene load_steps=15 format=3 uid="uid://ctgq3b4bjcmx8"]
+[gd_scene load_steps=14 format=3 uid="uid://ctgq3b4bjcmx8"]
 
 [ext_resource type="Script" path="res://scripts/test.gd" id="1_qa1qf"]
 [ext_resource type="PackedScene" uid="uid://ktg6js5i4u5u" path="res://CollisionShapes/parallax_background.tscn" id="1_vn3ca"]
-[ext_resource type="PackedScene" uid="uid://08m0dys6xuai" path="res://obstacles/sigil.tscn" id="2_w6dky"]
-[ext_resource type="PackedScene" uid="uid://bq7qdtwl2o2l5" path="res://obstacles/dagger.tscn" id="3_c46j8"]
-[ext_resource type="PackedScene" uid="uid://bprl57qjp72nw" path="res://obstacles/slime_pellet.tscn" id="4_emsoi"]
+[ext_resource type="Script" path="res://scripts/obstacles.gd" id="2_ylc1y"]
 [ext_resource type="PackedScene" uid="uid://bn68vfq8ihl14" path="res://player.tscn" id="5_ujkyi"]
-[ext_resource type="PackedScene" uid="uid://dew7q5cubqqde" path="res://obstacles/shield_pickup.tscn" id="8_bnm7k"]
+[ext_resource type="Texture2D" uid="uid://f5pl50ffs87" path="res://Sprites/pause.png" id="8_1o6r7"]
+[ext_resource type="Texture2D" uid="uid://brojntbv1ojpy" path="res://Sprites/pausePressed.png" id="9_v2tw3"]
 [ext_resource type="Texture2D" uid="uid://ca1u72wcr805x" path="res://Sprites/Point.png" id="10_p221t"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t6asw"]
@@ -52,28 +51,21 @@ animations = [{
 script = ExtResource("1_qa1qf")
 
 [node name="Obstacles" type="Node2D" parent="."]
+script = ExtResource("2_ylc1y")
 
-[node name="MissileTimer" type="Timer" parent="Obstacles"]
-wait_time = 5.0
+[node name="ShieldTimer" type="Timer" parent="Obstacles"]
+wait_time = 20.0
 autostart = true
 
-[node name="SigilTimer" type="Timer" parent="Obstacles"]
-
-[node name="Sigil" parent="Obstacles" instance=ExtResource("2_w6dky")]
-position = Vector2(-251, 91)
-
-[node name="Dagger" parent="Obstacles" instance=ExtResource("3_c46j8")]
-position = Vector2(250, 117)
-
-[node name="SlimePellet" parent="Obstacles" instance=ExtResource("4_emsoi")]
-position = Vector2(88, 146)
+[node name="RandomMissiles" type="Node2D" parent="Obstacles"]
 
 [node name="Player" parent="." instance=ExtResource("5_ujkyi")]
+position = Vector2(80, 145)
 
 [node name="ParallaxBackground" parent="." instance=ExtResource("1_vn3ca")]
 
 [node name="Floor" type="StaticBody2D" parent="."]
-position = Vector2(50, 164)
+position = Vector2(50, 165)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
 position = Vector2(140, 0)
@@ -112,6 +104,14 @@ position = Vector2(5, 20)
 scale = Vector2(0.75, 0.75)
 sprite_frames = SubResource("SpriteFrames_g0uwn")
 
+[node name="Pause" type="TextureButton" parent="UI"]
+offset_left = 300.0
+offset_top = 2.0
+offset_right = 320.0
+offset_bottom = 22.0
+texture_normal = ExtResource("8_1o6r7")
+texture_pressed = ExtResource("9_v2tw3")
+
 [node name="GameOverScreen" type="Node2D" parent="UI"]
 visible = false
 
@@ -121,24 +121,22 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -5.0
-offset_top = -5.0
-offset_right = 5.0
-offset_bottom = 5.0
+offset_right = 320.0
+offset_bottom = 180.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.145098, 0, 0, 0.541176)
 
-[node name="Label" type="Label" parent="UI/GameOverScreen"]
+[node name="GameOver" type="Label" parent="UI/GameOverScreen"]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = 114.0
-offset_top = 30.0
+offset_top = 27.0
 offset_right = 206.0
-offset_bottom = 53.0
+offset_bottom = 50.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
@@ -154,16 +152,83 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = 138.0
-offset_top = 60.0
+offset_top = 77.0
 offset_right = 182.0
-offset_bottom = 82.0
+offset_bottom = 99.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 10
 text = "Restart"
 
-[node name="ShieldPickup" parent="." instance=ExtResource("8_bnm7k")]
-position = Vector2(870, 53)
+[node name="Score" type="Label" parent="UI/GameOverScreen"]
+offset_left = 141.0
+offset_top = 50.0
+offset_right = 181.0
+offset_bottom = 73.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+text = "4000"
 
-[connection signal="timeout" from="Obstacles/MissileTimer" to="." method="_on_missile_timer_timeout"]
+[node name="Quit" type="Button" parent="UI/GameOverScreen"]
+offset_left = 143.0
+offset_top = 101.0
+offset_right = 172.0
+offset_bottom = 123.0
+theme_override_font_sizes/font_size = 10
+text = "Quit"
+
+[node name="LineEdit" type="LineEdit" parent="UI/GameOverScreen"]
+offset_left = 158.0
+offset_top = 127.0
+offset_right = 202.938
+offset_bottom = 149.0
+theme_override_font_sizes/font_size = 10
+text = "AAA"
+alignment = 1
+max_length = 3
+
+[node name="Initials" type="Label" parent="UI/GameOverScreen"]
+offset_left = 120.0
+offset_top = 131.0
+offset_right = 156.0
+offset_bottom = 145.0
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 10
+text = "Initials:"
+
+[node name="PauseScreen" type="Node2D" parent="UI"]
+process_mode = 2
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="UI/PauseScreen"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_right = 320.0
+offset_bottom = 180.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.14902, 0.14902, 0.14902, 0.513726)
+
+[node name="Quit" type="Button" parent="UI/PauseScreen"]
+offset_left = 143.0
+offset_top = 84.0
+offset_right = 185.0
+offset_bottom = 115.0
+text = "Quit"
+
+[node name="Continue" type="Button" parent="UI/PauseScreen"]
+offset_left = 124.0
+offset_top = 50.0
+offset_right = 203.0
+offset_bottom = 81.0
+text = "Continue"
+
+[connection signal="timeout" from="Obstacles/ShieldTimer" to="Obstacles" method="_on_shield_timer_timeout"]
+[connection signal="pressed" from="UI/Pause" to="." method="_on_pause_pressed"]
 [connection signal="pressed" from="UI/GameOverScreen/Restart" to="." method="_on_restart_pressed"]
+[connection signal="pressed" from="UI/GameOverScreen/Quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="UI/PauseScreen/Quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="UI/PauseScreen/Continue" to="." method="_on_continue_pressed"]

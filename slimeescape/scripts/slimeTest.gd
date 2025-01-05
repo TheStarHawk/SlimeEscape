@@ -1,14 +1,17 @@
 extends CharacterBody2D
 
-const maxSpeed : int = 10000
+const maxSpeed : int = 6000
 const minSpeed : int = 2000
 var speed : float = 2000
 var accel : float = 250
-const JUMP_VELOCITY = -4000.0
-const gravity = 4000
+const JUMP_VELOCITY = -4500.0
+const gravity = 4500
+var virtSpeed = 0
+const virtAccel = 12000
 
 enum State {NORMAL, VEHICLE, DEAD, GAMEOVER}
 var state = State.NORMAL
+var hurted : bool = false
 
 func updateAnim():
 	match state:
@@ -17,10 +20,13 @@ func updateAnim():
 				$AnimatedSprite2D.animation = "air"
 				if Input.is_action_pressed("Action"):
 					$AnimatedSprite2D.frame = 0
+					$Near.position = Vector2(10, -13)
 				else:
 					$AnimatedSprite2D.frame = 1
+					$Near.position = Vector2(8, -12)
 			else:
 				$AnimatedSprite2D.play("ground")
+				$Near.position = Vector2(7, -11)
 				
 		State.DEAD:
 			if not is_on_floor():
@@ -34,7 +40,6 @@ func updateAnim():
 		State.GAMEOVER:
 			$AnimatedSprite2D.animation = "dead"
 			$AnimatedSprite2D.frame = 3
-			$"../UI/GameOverScreen".visible = true
 
 func _physics_process(delta: float) -> void:
 	updateAnim()
@@ -42,15 +47,20 @@ func _physics_process(delta: float) -> void:
 		State.NORMAL:
 			# Add the gravity.
 			if not is_on_floor() and not Input.is_action_pressed("Action"):
-				velocity.y = gravity * delta
+				if is_on_ceiling():
+					virtSpeed = 0
+				virtSpeed = clampf(virtSpeed + virtAccel * delta, JUMP_VELOCITY, gravity)
 
 			# Handle jump.
 			if Input.is_action_pressed("Action"):
-				velocity.y = JUMP_VELOCITY * delta
+				if is_on_floor():
+					virtSpeed = 0
+				virtSpeed = clampf(virtSpeed - virtAccel * delta, JUMP_VELOCITY, gravity)
 				
 			speed = clampf(speed + accel * delta, minSpeed, maxSpeed)
 			velocity.x = speed * delta
-
+			velocity.y = virtSpeed * delta
+			
 			move_and_slide()
 			
 		State.DEAD:
@@ -64,8 +74,11 @@ func _physics_process(delta: float) -> void:
 	
 func die():
 	state = State.DEAD
+	$EndTimer.start()
 	
 func hurt():
+	hurted = true
+	$HurtTimer.start()
 	if $Shield.visible == true:
 		$Shield.visible = false
 	else:
@@ -75,4 +88,16 @@ func shieldGet():
 	if $Shield.visible == false:
 		$Shield.visible = true
 	else:
-		pass
+		$"..".score += 50
+		
+func pelletGet():
+	$"..".pelletGet()
+
+func _on_end_timer_timeout():
+	$"..".endGame()
+
+func _on_timer_timeout():
+	$Near.visible = false
+
+func _on_hurt_timer_timeout():
+	hurted = false

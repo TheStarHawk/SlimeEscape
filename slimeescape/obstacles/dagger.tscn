@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://3e5s7oqxwerw" path="res://Sprites/Daggerpng.png" id="2_a5xd1"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_nnhv6"]
-radius = 12.0
+radius = 11.0
 
 [node name="Dagger" type="Node2D"]
 scale = Vector2(0.75, 0.75)
@@ -20,3 +20,4 @@ texture = ExtResource("2_a5xd1")
 shape = SubResource("CircleShape2D_nnhv6")
 
 [connection signal="body_entered" from="Hurtbox" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_entered" from="Hurtbox" to="." method="_on_hurtbox_body_entered"]

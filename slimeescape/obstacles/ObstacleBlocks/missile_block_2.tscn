@@ -1,0 +1,88 @@
+[gd_scene load_steps=4 format=3 uid="uid://cvup14e8jylvy"]
+
+[ext_resource type="Script" path="res://scripts/blocks/missile_block_2.gd" id="1_2wwxj"]
+[ext_resource type="PackedScene" uid="uid://bprl57qjp72nw" path="res://obstacles/slime_pellet.tscn" id="2_copxu"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gnkdk"]
+size = Vector2(20, 180)
+
+[node name="MissileBlock2" type="Node2D"]
+script = ExtResource("1_2wwxj")
+
+[node name="spawner" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="spawner"]
+position = Vector2(10, 90)
+shape = SubResource("RectangleShape2D_gnkdk")
+
+[node name="Pellets" type="Node2D" parent="."]
+
+[node name="SlimePellet" parent="Pellets" instance=ExtResource("2_copxu")]
+position = Vector2(60, 143)
+
+[node name="SlimePellet2" parent="Pellets" instance=ExtResource("2_copxu")]
+position = Vector2(73, 143)
+
+[node name="SlimePellet3" parent="Pellets" instance=ExtResource("2_copxu")]
+position = Vector2(86, 143)
+
+[node name="SlimePellet4" parent="Pellets" instance=ExtResource("2_copxu")]
+position = Vector2(130, 108)
+
+[node name="SlimePellet5" parent="Pellets" instance=ExtResource("2_copxu")]
+position = Vector2(143, 108)
+
+[node name="SlimePellet6" parent="Pellets" instance=ExtResource("2_copxu")]
+position = Vector2(156, 108)
+
+[node name="SlimePellet7" parent="Pellets" instance=ExtResource("2_copxu")]
+position = Vector2(200, 73)
+
+[node name="SlimePellet8" parent="Pellets" instance=ExtResource("2_copxu")]
+position = Vector2(213, 73)
+
+[node name="SlimePellet9" parent="Pellets" instance=ExtResource("2_copxu")]
+position = Vector2(226, 73)
+
+[node name="SlimePellet10" parent="Pellets" instance=ExtResource("2_copxu")]
+position = Vector2(270, 38)
+
+[node name="SlimePellet11" parent="Pellets" instance=ExtResource("2_copxu")]
+position = Vector2(283, 38)
+
+[node name="SlimePellet12" parent="Pellets" instance=ExtResource("2_copxu")]
+position = Vector2(296, 38)
+
+[node name="SlimePellet13" parent="Pellets" instance=ExtResource("2_copxu")]
+position = Vector2(340, 73)
+
+[node name="SlimePellet14" parent="Pellets" instance=ExtResource("2_copxu")]
+position = Vector2(353, 73)
+
+[node name="SlimePellet15" parent="Pellets" instance=ExtResource("2_copxu")]
+position = Vector2(366, 73)
+
+[node name="SlimePellet16" parent="Pellets" instance=ExtResource("2_copxu")]
+position = Vector2(410, 108)
+
+[node name="SlimePellet17" parent="Pellets" instance=ExtResource("2_copxu")]
+position = Vector2(423, 108)
+
+[node name="SlimePellet18" parent="Pellets" instance=ExtResource("2_copxu")]
+position = Vector2(436, 108)
+
+[node name="SlimePellet19" parent="Pellets" instance=ExtResource("2_copxu")]
+position = Vector2(480, 143)
+
+[node name="SlimePellet20" parent="Pellets" instance=ExtResource("2_copxu")]
+position = Vector2(493, 143)
+
+[node name="SlimePellet21" parent="Pellets" instance=ExtResource("2_copxu")]
+position = Vector2(506, 143)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 4.0
+one_shot = true
+
+[connection signal="body_entered" from="spawner" to="." method="_on_spawner_body_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

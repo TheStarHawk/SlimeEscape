@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://dew7q5cubqqde"]
+[gd_scene load_steps=9 format=3 uid="uid://dew7q5cubqqde"]
 
 [ext_resource type="Script" path="res://shield_pickup.gd" id="1_8h6gn"]
+[ext_resource type="Script" path="res://obstacles/shield_pickup_movement.gd" id="1_alr7b"]
 [ext_resource type="Texture2D" uid="uid://dbjp1redjwpq5" path="res://Sprites/ShieldPickup.png" id="2_vqib0"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qu1n8"]
@@ -29,14 +30,23 @@ animations = [{
 radius = 9.0
 height = 18.0
 
-[node name="ShieldPickup" type="Area2D"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_nq161"]
+
+[node name="Shield" type="CharacterBody2D"]
+script = ExtResource("1_alr7b")
+
+[node name="ShieldPickup" type="Area2D" parent="."]
 script = ExtResource("1_8h6gn")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="ShieldPickup"]
 sprite_frames = SubResource("SpriteFrames_l8816")
 frame_progress = 0.854292
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShieldPickup"]
 shape = SubResource("CapsuleShape2D_d4wqh")
 
-[connection signal="body_shape_entered" from="." to="." method="_on_body_shape_entered"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_nq161")
+disabled = true
+
+[connection signal="body_shape_entered" from="ShieldPickup" to="ShieldPickup" method="_on_body_shape_entered"]

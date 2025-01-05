@@ -1,0 +1,15 @@
+res://CollisionShapes/Ground.tres::f2ac71ae5469b41707ed115c6d6428bb::1735802201::res://.godot/exported/133200997/export-f358a1830391d63b166d95bb0a4e6628-Ground.res
+res://CollisionShapes/Jumping.tres::f38c72ba75e9289c97866bae2bd9e8f2::1735802201::res://.godot/exported/133200997/export-ed8e1caa57740d7f9584023d7372104e-Jumping.res
+res://CollisionShapes/parallax_background.tscn::4c4140294a519bda4f7710e55639efa2::1735895215::res://.godot/exported/133200997/export-8c4aac45fde555cda657f0b77e69d528-parallax_background.scn
+res://CollisionShapes/test.tscn::2fa2ac3398427fd3a5d0c839fb460698::1735986639::res://.godot/exported/133200997/export-5db001eedcf76a3db964f97464d6a211-test.scn
+res://obstacles/ObstacleBlocks/dagger_block_1.tscn::78ad771c74288e752546be4e625da2d4::1735927438::res://.godot/exported/133200997/export-322bf0cf9d0d9585e4645c986ef440be-dagger_block_1.scn
+res://obstacles/ObstacleBlocks/missile_block_1.tscn::6413626ed77c1b697143b8277acb1b44::1735926561::res://.godot/exported/133200997/export-b8aaf017e1f452aa39b9d347f4030a81-missile_block_1.scn
+res://obstacles/ObstacleBlocks/missile_block_2.tscn::7e75dc867d160496c6e0c04c99cc0f96::1735926561::res://.godot/exported/133200997/export-3e18a7e8b6a9b8cb265b2734754b4d95-missile_block_2.scn
+res://obstacles/ObstacleBlocks/sigil_block_1.tscn::185356e7b08430241e3bbf2981eb1927::1735923932::res://.godot/exported/133200997/export-3133141bab6a1d30ccb12bbb83533b6c-sigil_block_1.scn
+res://obstacles/dagger.tscn::47641ebd86c3d71bb783c3a0f693c900::1735986639::res://.godot/exported/133200997/export-11097dcaa41c7476b8ff4b4507fa8571-dagger.scn
+res://obstacles/magic_missile.tscn::825acf3f976ed7f1904d40e0dcdf390d::1735986639::res://.godot/exported/133200997/export-e0a3ba208326b273d5ed3c0bcc6ebf59-magic_missile.scn
+res://obstacles/shield_pickup.tscn::1b75dab610c4eaf309b186389a25f226::1735986530::res://.godot/exported/133200997/export-0d0de645c729b732751232a05a6a0248-shield_pickup.scn
+res://obstacles/sigil.tscn::0acd9f708084f20fd1bdcd750add642a::1735926561::res://.godot/exported/133200997/export-b5c1e60752b975f18929baa8d337f957-sigil.scn
+res://obstacles/slime_pellet.tscn::c0bf40a179070ea353a971773ead3241::1735926561::res://.godot/exported/133200997/export-6bc99e0271a3b45e828368d7937692cd-slime_pellet.scn
+res://main_menu.tscn::f5bfc21032044e6f87560dab0b28b272::1735986639::res://.godot/exported/133200997/export-8b03550a1e82db90fe95208a9e9dbb82-main_menu.scn
+res://player.tscn::66b946481875526902a15646199d26c6::1735986639::res://.godot/exported/133200997/export-36a25e342948d0ceacc500772b5412b3-player.scn

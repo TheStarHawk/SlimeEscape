@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://2pnmhh5b87wa"]
+[gd_scene load_steps=19 format=3 uid="uid://2pnmhh5b87wa"]
 
 [ext_resource type="Script" path="res://scripts/magic_missile.gd" id="1_68tsr"]
 [ext_resource type="Texture2D" uid="uid://1sa7am10bdc8" path="res://Sprites/MagicMissile.png" id="2_4wcid"]
@@ -98,7 +98,10 @@ animations = [{
 radius = 3.0
 height = 17.0
 
-[node name="Missile" type="CharacterBody2D"]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_31blc"]
+radius = 11.0
+
+[node name="MagicMissile" type="CharacterBody2D"]
 script = ExtResource("1_68tsr")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -107,13 +110,14 @@ rotation = 1.5708
 shape = SubResource("RectangleShape2D_4jnob")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+visible = false
 sprite_frames = SubResource("SpriteFrames_q8cwm")
-animation = &"boom"
+frame_progress = 0.329718
 
 [node name="Warning" type="AnimatedSprite2D" parent="."]
 position = Vector2(-67, 0)
 sprite_frames = SubResource("SpriteFrames_ifcxc")
-frame_progress = 0.972781
+frame_progress = 0.0520621
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 3.0
@@ -128,5 +132,13 @@ position = Vector2(-1, 0)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_1e8c2")
 
+[node name="NearMiss" type="Area2D" parent="."]
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="NearMiss"]
+position = Vector2(-1, 0)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_31blc")
+
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="body_entered" from="Hurtbox" to="." method="_on_hurtbox_body_entered"]
+[connection signal="body_exited" from="NearMiss" to="." method="_on_near_miss_body_exited"]

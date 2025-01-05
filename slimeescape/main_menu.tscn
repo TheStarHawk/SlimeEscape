@@ -1,0 +1,61 @@
+[gd_scene load_steps=3 format=3 uid="uid://cdroioek4ql7f"]
+
+[ext_resource type="Script" path="res://main_menu.gd" id="1_5tmmq"]
+[ext_resource type="Texture2D" uid="uid://dpabe32vc4uup" path="res://Sprites/logo.png" id="2_bnoj5"]
+
+[node name="MainMenu" type="Node2D"]
+script = ExtResource("1_5tmmq")
+
+[node name="Menu" type="Node2D" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="Menu"]
+offset_right = 40.0
+offset_bottom = 40.0
+color = Color(0.203922, 1, 0.317647, 0.372549)
+
+[node name="Logo" type="Sprite2D" parent="Menu"]
+position = Vector2(198, 51)
+texture = ExtResource("2_bnoj5")
+
+[node name="Play" type="Button" parent="Menu"]
+offset_left = 178.0
+offset_top = 106.0
+offset_right = 213.0
+offset_bottom = 132.0
+theme_override_font_sizes/font_size = 13
+text = "Play"
+
+[node name="Quit" type="Button" parent="Menu"]
+offset_left = 177.0
+offset_top = 138.0
+offset_right = 213.0
+offset_bottom = 164.0
+theme_override_font_sizes/font_size = 13
+text = "Quit"
+
+[node name="Scoreboard" type="Node2D" parent="."]
+
+[node name="ItemList" type="ItemList" parent="Scoreboard"]
+offset_right = 117.0
+offset_bottom = 180.0
+theme_override_font_sizes/font_size = 9
+allow_search = false
+item_count = 10
+item_0/text = "#1 10000 - KPK"
+item_0/selectable = false
+item_1/text = "#2 9000 - KPK"
+item_1/selectable = false
+item_2/text = "#3 8000 - KPK"
+item_2/selectable = false
+item_3/text = "#4 7000 - KPK"
+item_3/selectable = false
+item_4/text = "#5 6000 - KPK"
+item_4/selectable = false
+item_5/selectable = false
+item_6/selectable = false
+item_7/selectable = false
+item_8/selectable = false
+item_9/selectable = false
+
+[connection signal="pressed" from="Menu/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="Menu/Quit" to="." method="_on_quit_pressed"]

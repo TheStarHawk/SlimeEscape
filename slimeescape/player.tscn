@@ -1,10 +1,11 @@
-[gd_scene load_steps=15 format=3 uid="uid://bn68vfq8ihl14"]
+[gd_scene load_steps=16 format=3 uid="uid://bn68vfq8ihl14"]
 
 [ext_resource type="Script" path="res://scripts/slimeTest.gd" id="1_oinfq"]
 [ext_resource type="Texture2D" uid="uid://dpucyim5ca5n" path="res://Sprites/Slime.png" id="2_38hmw"]
 [ext_resource type="Texture2D" uid="uid://xa8ajipsyxi8" path="res://Sprites/Dead.png" id="3_rxc3n"]
 [ext_resource type="Shape2D" uid="uid://cm4bglpkn781n" path="res://CollisionShapes/Ground.tres" id="4_72tjd"]
 [ext_resource type="Texture2D" uid="uid://opd14kq7ufyv" path="res://Sprites/Shielf.png" id="5_o1631"]
+[ext_resource type="Texture2D" uid="uid://cuajr3j0hclaf" path="res://Sprites/Near.png" id="6_7s3qx"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_htr7b"]
 atlas = ExtResource("2_38hmw")
@@ -86,8 +87,8 @@ script = ExtResource("1_oinfq")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_1nasv")
-animation = &"ground"
-frame_progress = 0.894207
+animation = &"air"
+frame_progress = 0.393693
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 2)
@@ -103,3 +104,22 @@ limit_bottom = 180
 [node name="Shield" type="Sprite2D" parent="."]
 visible = false
 texture = ExtResource("5_o1631")
+
+[node name="EndTimer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[node name="Near" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(10, -13)
+texture = ExtResource("6_7s3qx")
+
+[node name="NearMissTimer" type="Timer" parent="."]
+wait_time = 0.5
+
+[node name="HurtTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="EndTimer" to="." method="_on_end_timer_timeout"]
+[connection signal="timeout" from="NearMissTimer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="HurtTimer" to="." method="_on_hurt_timer_timeout"]
