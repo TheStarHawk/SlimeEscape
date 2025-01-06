@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://cdroioek4ql7f"]
+[gd_scene load_steps=4 format=3 uid="uid://cdroioek4ql7f"]
 
 [ext_resource type="Script" path="res://main_menu.gd" id="1_5tmmq"]
 [ext_resource type="Texture2D" uid="uid://dpabe32vc4uup" path="res://Sprites/logo.png" id="2_bnoj5"]
+[ext_resource type="AudioStream" uid="uid://cp5ntamj6blw0" path="res://AudioAssets/MenuMusic.ogg" id="3_kx2ht"]
 
 [node name="MainMenu" type="Node2D"]
 script = ExtResource("1_5tmmq")
@@ -11,7 +12,7 @@ script = ExtResource("1_5tmmq")
 [node name="ColorRect" type="ColorRect" parent="Menu"]
 offset_right = 40.0
 offset_bottom = 40.0
-color = Color(0.203922, 1, 0.317647, 0.372549)
+color = Color(0.697064, 0.425533, 0.97998, 0.372549)
 
 [node name="Logo" type="Sprite2D" parent="Menu"]
 position = Vector2(198, 51)
@@ -57,6 +58,11 @@ item_6/selectable = false
 item_7/selectable = false
 item_8/selectable = false
 item_9/selectable = false
+
+[node name="MenuMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_kx2ht")
+volume_db = -20.0
+autoplay = true
 
 [connection signal="pressed" from="Menu/Play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="Menu/Quit" to="." method="_on_quit_pressed"]
